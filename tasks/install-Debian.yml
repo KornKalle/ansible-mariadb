@@ -1,0 +1,48 @@
+- name: install pip
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Make sure pymysql is present
+  become: true # needed if the other tasks are not played as root
+  pip:
+    name: pymysql
+    state: present
+
+- name: add mariadb apt-key
+  apt_key:
+    url: https://mariadb.org/mariadb_release_signing_key.asc
+    state: present
+
+- name: Add PPA Repository
+  apt_repository:
+    repo: 'deb http://mirror2.hs-esslingen.de/mariadb/repo/{{ mariadb_version }}/ubuntu {{ ansible_distribution_release }} main'
+    state: present
+    update_cache: yes
+  when: "ansible_distribution == 'Ubuntu'"
+
+- name: Add Debian repository
+  apt_repository:
+    repo: 'deb https://mariadb.mirror.iphh.net/repo/{{ mariadb_version }}/debian {{ ansible_distribution_release | lower }} main'
+    state: present
+    update_cache: yes
+  when: "ansible_distribution == 'Debian'"
+
+- name: Install mariadb
+  apt:
+    name: mariadb-server
+    state: present
+
+- name: enable mariadb
+  systemd:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: set config
+  template:
+    src: "{{ mariadb_config_path }}"
+    dest: "/etc/mysql/mariadb.conf.d/50-server.cnf"
+  when: mariadb_set_config
+  notify:
+    - restart mariadb

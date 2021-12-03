@@ -1,0 +1,26 @@
+#
+## General
+#
+
+mariadb_version: 10.5
+# wether to update config via ansible or not
+mariadb_set_config: yes
+# can be overwritten for a custom config
+mariadb_config_path: templates/server.cnf.j2
+# ip address to bind on, defaulting to localhost
+mariadb_bind_address: 127.0.0.1
+
+#
+## Fine Tuning / Performance
+#
+
+mariadb_innodb_buffer_pool_size: 200M
+mariadb_key_buffer_size: 16M
+mariadb_max_allowed_packet: 32M
+mariadb_max_connections: 100
+mariadb_query_cache_limit: 1M
+mariadb_query_cache_size: 32M
+mariadb_table_cache: 256
+mariadb_thread_cache_size: 32
+mariadb_thread_stack: 256K
+

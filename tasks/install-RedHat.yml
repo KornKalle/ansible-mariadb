@@ -1,0 +1,17 @@
+- name: redhat | adding mariadb repo
+  template:
+    src: "templates/MariaDB.repo.j2"
+    dest: "/etc/yum.repos.d/MariaDB.repo"
+    owner: "root"
+    group: "root"
+
+- name: Install MariaDB Server
+  yum:
+    name: MariaDB-server
+    state: present
+
+- name: Enable MariaDB systemd Service
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
