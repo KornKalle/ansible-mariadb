@@ -16,7 +16,7 @@
 
 - name: Add PPA Repository
   apt_repository:
-    repo: 'deb http://mirror2.hs-esslingen.de/mariadb/repo/{{ mariadb_version }}/ubuntu {{ ansible_distribution_release }} main'
+    repo: 'deb https://mirror1.hs-esslingen.de/pub/Mirrors/mariadb/repo/{{ mariadb_version }}/ubuntu {{ ansible_distribution_release }} main'
     state: present
     update_cache: yes
   when: "ansible_distribution == 'Ubuntu'"

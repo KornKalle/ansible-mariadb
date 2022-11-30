@@ -2,7 +2,7 @@
 ## General
 #
 
-mariadb_version: 10.5
+mariadb_version: 10.6
 # wether to update config via ansible or not
 mariadb_set_config: yes
 # can be overwritten for a custom config
