@@ -18,19 +18,18 @@
   apt_repository:
     repo: 'deb https://mirror1.hs-esslingen.de/pub/Mirrors/mariadb/repo/{{ mariadb_version }}/ubuntu {{ ansible_distribution_release }} main'
     state: present
-    update_cache: yes
   when: "ansible_distribution == 'Ubuntu'"
 
 - name: Add Debian repository
   apt_repository:
     repo: 'deb https://mariadb.mirror.iphh.net/repo/{{ mariadb_version }}/debian {{ ansible_distribution_release | lower }} main'
     state: present
-    update_cache: yes
   when: "ansible_distribution == 'Debian'"
 
 - name: Install mariadb
   apt:
     name: mariadb-server
+    update_cache: yes
     state: present
 
 - name: enable mariadb
