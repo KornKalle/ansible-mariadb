@@ -39,16 +39,44 @@ max_allowed_packet	= {{ mariadb_max_allowed_packet }}
 thread_stack		= {{ mariadb_thread_stack }}
 thread_cache_size       = {{ mariadb_thread_cache_size }}
 table_cache            = {{ mariadb_table_cache }}
+table_definition_cache = {{ mariadb_table_definition_cache | default('200') }}
 #thread_concurrency     = 10
+thread_handling      = {{ mariadb_thread_handling | default('one-thread-per-connection') }}
+join_buffer_size = {{ mariadb_join_buffer_size | default('262144') }}
+innodb_buffer_pool_instances = 8
+
+innodb_doublewrite= 1
+innodb_thread_concurrency=0
+innodb_flush_log_at_trx_commit= 0
+innodb_flush_method=O_DIRECT_NO_FSYNC
+innodb_max_dirty_pages_pct=90
+innodb_max_dirty_pages_pct_lwm=10
+innodb_lru_scan_depth=2048
+innodb_page_cleaners=4
+innodb_adaptive_flushing = 1
+innodb_flush_neighbors = 0
+innodb_read_io_threads = 16
+innodb_write_io_threads = 16
+innodb_io_capacity=1500
+innodb_io_capacity_max=2500
+innodb_purge_threads=4
+innodb_adaptive_hash_index=0
+max_prepared_stmt_count=1000000
+innodb_monitor_enable = '%'
+performance_schema = ON
+
+innodb-log-file-size = {{ mariadb_innodb_log_file_size | default('100663296')}}
 
 # This replaces the startup script and checks MyISAM tables if needed
 # the first time they are touched
 myisam_recover_options  = BACKUP
 
+
 #
 # * Query Cache Configuration
 #
 
+query_cache_type = {{ mariadb_query_cache_type | default('ON') }}
 query_cache_limit	= {{ mariadb_query_cache_limit }}
 query_cache_size        = {{ mariadb_query_cache_size }}
 
